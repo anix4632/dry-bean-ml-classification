@@ -1,66 +1,43 @@
-
 # Dry Bean Classification Using Machine Learning
 
 ## 1. Problem Statement
-
-The objective of this project is to classify dry bean varieties
-using machine learning classification algorithms based on
-physical measurements of dry bean samples.
-
-This is a multiclass classification problem involving seven
-different dry bean varieties.
+This project uses supervised machine learning algorithms to classify dry bean varieties from physical measurements. It is a multiclass classification task involving seven varieties.
 
 ## 2. Dataset Description
+- Dataset: UCI Dry Bean Dataset
+- Source: https://archive.ics.uci.edu/dataset/602/dry+bean+dataset
+- Records: 13,611
+- Input features: 16 numerical features
+- Target: `Class`
+- Classes: Seker, Barbunya, Bombay, Cali, Dermason, Horoz and Sira
+- DOI: https://doi.org/10.24432/C50S4B
+- License: CC BY 4.0
 
-Dataset: UCI Dry Bean Dataset
+## 3. GitHub Repository
+https://github.com/anix4632/dry-bean-ml-classification
 
-Source: https://archive.ics.uci.edu/dataset/602/dry
+## 4. Live Streamlit Application
+https://dry-bean-ml-classification-yonyqxftojx99ubafqsabd.streamlit.app/
 
-Total Instances: 13,611
+The app accepts a labelled test CSV, lets users select one of the five saved models, and displays evaluation metrics, a confusion matrix and a classification report. It uses saved models and does not retrain on uploaded test data.
 
-Input Features: 16
+## 5. Data Preparation
+- Separated the 16 input features from the `Class` target.
+- Used an 80:20 stratified training/testing split.
+- Applied StandardScaler within pipelines for Logistic Regression, KNN and SVM.
+- Evaluated all five models on the same held-out test split.
 
-Target Variable: Class
-
-Number of Classes: 7
-
-The dataset contains numerical measurements of dry bean samples.
-The target variable represents the corresponding bean variety.
-
-## 3. Data Preparation
-
-- Checked dataset dimensions and missing values.
-- Separated input features and target variable.
-- Used an 80:20 training and testing split.
-- Applied stratified sampling to preserve class distribution.
-- Used StandardScaler within pipelines for Logistic Regression,
-  KNN and SVM.
-
-## 4. Machine Learning Models
-
-Five classification algorithms were implemented:
-
+## 6. Machine Learning Models
 1. Logistic Regression
 2. Decision Tree Classifier
 3. K-Nearest Neighbors (KNN)
 4. Gaussian Naive Bayes
 5. Support Vector Machine (SVM)
 
-## 5. Evaluation Metrics
+## 7. Evaluation Metrics
+Accuracy, AUC, Precision, Recall, F1 Score and Matthews Correlation Coefficient (MCC). Precision, Recall and F1 use macro averaging. AUC uses the One-vs-Rest approach with macro averaging.
 
-The following metrics were calculated:
-
-- Accuracy
-- AUC Score
-- Precision
-- Recall
-- F1 Score
-- Matthews Correlation Coefficient (MCC)
-
-Precision, Recall and F1 Score use macro averaging.
-AUC is calculated using the One-vs-Rest approach with macro averaging.
-
-## 6. Model Performance Comparison
+## 8. Model Performance Comparison
 
 | Model | Accuracy | AUC | Precision | Recall | F1 Score | MCC |
 |---|---:|---:|---:|---:|---:|---:|
@@ -68,91 +45,29 @@ AUC is calculated using the One-vs-Rest approach with macro averaging.
 | Decision Tree | 0.8920 | 0.9450 | 0.9075 | 0.9090 | 0.9081 | 0.8696 |
 | KNN | 0.9166 | 0.9833 | 0.9320 | 0.9271 | 0.9293 | 0.8992 |
 | Gaussian Naive Bayes | 0.7639 | 0.9672 | 0.7744 | 0.7694 | 0.7677 | 0.7154 |
-| SVM | 0.9221 | 0.9951 | 0.9353 | 0.9320 | 0.9335 | 0.9059 |
+| SVM | **0.9221** | **0.9951** | 0.9353 | 0.9320 | **0.9335** | **0.9059** |
 
-## 7. Observations
+## 9. Observations
 
-### Logistic Regression
+| Model | Observation |
+|---|---|
+| Logistic Regression | Strong results: 0.9214 accuracy and 0.9948 AUC. It achieved the highest Precision (0.9354) and Recall (0.9321). F1 ties with SVM to four decimal places. |
+| Decision Tree | Accuracy was 0.8920, lower than Logistic Regression, KNN and SVM on this test split. |
+| KNN | Accuracy was 0.9166 and AUC was 0.9833, making it competitive with the leading models. Feature scaling was applied. |
+| Gaussian Naive Bayes | Accuracy was 0.7639. Its AUC was 0.9672, but its other reported classification metrics were comparatively lower. |
+| SVM | Highest Accuracy (0.9221), AUC (0.9951) and MCC (0.9059). F1 ties with Logistic Regression to four decimal places. |
 
-Logistic Regression achieved an accuracy of 92.14%.
-It obtained a high AUC score of 0.9948.
-Its Precision and Recall were slightly higher than SVM
-in this experiment.
+## 10. Overall Winner and Conclusion
+**SVM is the overall best-performing model in this experiment**, with the highest Accuracy, AUC and MCC. Its advantage over Logistic Regression is small (approximately two additional correctly classified test samples), so the two models performed very similarly. Logistic Regression had slightly higher Precision and Recall. KNN was also competitive; Decision Tree and Gaussian Naive Bayes had lower overall results.
 
-### Decision Tree Classifier
-
-The Decision Tree achieved an accuracy of 89.20%.
-Its performance was lower than Logistic Regression and KNN
-in this experiment.
-
-### K-Nearest Neighbors
-
-KNN achieved an accuracy of 91.66%.
-Its performance was close to Logistic Regression and SVM.
-Feature scaling was applied before model training.
-
-### Gaussian Naive Bayes
-
-Gaussian Naive Bayes achieved an accuracy of 76.39%.
-Although its AUC score was 0.9672, its accuracy and other
-classification metrics were lower than those of the other models.
-
-### Support Vector Machine
-
-SVM achieved the highest accuracy of 92.21% and the highest
-AUC score of 0.9951.
-It also achieved the highest MCC of 0.9059.
-Its F1 Score was equal to Logistic Regression at four decimal places.
-
-## 8. Overall Model Comparison and Conclusion
-
-Based on the evaluation results, Support Vector Machine
-performed best overall among the five implemented models.
-
-Logistic Regression also showed strong performance,
-with slightly higher Precision and Recall than SVM.
-KNN achieved competitive results.
-
-Gaussian Naive Bayes had comparatively lower accuracy,
-while the Decision Tree achieved moderate performance.
-
-The experiment demonstrates that different classification
-algorithms can produce different results on the same dataset.
-
-## 9. Streamlit Application
-
-The Streamlit application provides:
-
-- CSV test dataset upload.
-- Selection of one of the five trained models.
-- Display of Accuracy, AUC, Precision, Recall, F1 Score and MCC.
-- Confusion matrix.
-- Classification report.
-
-The application loads the saved trained models and evaluates
-the uploaded test dataset without retraining the models.
-
-## 10. Project Files
-
-- app.py
-- requirements.txt
-- README.md
-- test_data.csv
-- model_comparison_results.csv
-- model/
-  - logistic_regression.joblib
-  - decision_tree.joblib
-  - knn.joblib
-  - gaussian_nb.joblib
-  - svm.joblib
-
-## 11. GitHub Repository
-
-https://github.com/anix4632/dry-bean-ml-classification
+## 11. Project Files
+- `app.py` — Streamlit application
+- `requirements.txt` — Python dependencies
+- `README.md` — Project documentation
+- `test_data.csv` — Held-out labelled test data
+- `model_comparison_results.csv` — Model comparison metrics
+- `ML_Assignment_2_Dry_Bean.ipynb` — Training and evaluation notebook
+- `model/` — Saved models: `logistic_regression.joblib`, `decision_tree.joblib`, `knn.joblib`, `gaussian_nb.joblib`, `svm.joblib`
 
 ## 12. Dataset Reference
-
-UCI Machine Learning Repository:
-Dry Bean Dataset
-
-DOI: https://doi.org/10.24432/C50S4B
+UCI Machine Learning Repository, Dry Bean Dataset. DOI: https://doi.org/10.24432/C50S4B. Licensed under CC BY 4.0.
